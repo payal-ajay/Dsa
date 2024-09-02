@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+typedef struct {
+    int id;
+    char name[50];
+    float price;
+} Packet;
+
+void initializePacket(Packet *p, int id, const char *name, float price) {
+    p->id = id;
+    strncpy(p->name, name, sizeof(p->name) - 1);
+    p->name[sizeof(p->name) - 1] = '\0'; // Ensure null-termination
+    p->price = price;
+}
+
+void printPacket(const Packet *p) {
+    printf("ID: %d, Name: %s, Price: %.2f\n", p->id, p->name, p->price);
+}
+
+int main() {
+    int initialSize = 10;
+    int newSize = 20; // New size after resizing
+
+    Packet *inventory = (Packet *)malloc(initialSize * sizeof(Packet));
+    if (inventory == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return 1;
+    }
+
+    for (int i = 0; i < initialSize; i++) {
+        initializePacket(&inventory[i], i + 1, "Product", i * 10.0f);
+    }
+
+
+    printf("Initial Inventory:\n");
+    for (int i = 0; i < initialSize; i++) {
+        printPacket(&inventory[i]);
+    }
+
+  
+    Packet *temp = (Packet *)realloc(inventory, newSize * sizeof(Packet));
+    if (temp == NULL) {
+        fprintf(stderr, "Memory reallocation failed\n");
+        free(inventory); // Free original memory before exiting
+        return 1;
+    }
+    inventory = temp;
+
+  
+    for (int i = initialSize; i < newSize; i++) {
+        initializePacket(&inventory[i], i + 1, "New Product", i * 15.0f);
+    }
+
+ 
+    printf("\nUpdated Inventory:\n");
+    for (int i = 0; i < newSize; i++) {
+        printPacket(&inventory[i]);
+    }
+
+  
+    free(inventory);
+
+    return 0;
+}
