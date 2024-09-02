@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+
+typedef enum {
+    SQUARE,
+    RECTANGLE
+} ShapeType;
+
+
+typedef struct {
+    float area; 
+} Square;
+
+
+typedef struct {
+    float length; 
+    float breadth; 
+} Rectangle;
+
+
+typedef union {
+    Square square;
+    Rectangle rectangle;
+} ShapeUnion;
+
+
+typedef struct {
+    ShapeType type;
+    ShapeUnion shape; 
+} Shape;
+
+
+void displayShape(Shape s) {
+    if (s.type == SQUARE) {
+        printf("Shape: Square\n");
+        printf("Area: %.2f\n", s.shape.square.area);
+    } else if (s.type == RECTANGLE) {
+        printf("Shape: Rectangle\n");
+        printf("Length: %.2f\n", s.shape.rectangle.length);
+        printf("Breadth: %.2f\n", s.shape.rectangle.breadth);
+    }
+}
+
+int main() {
+    
+    Shape squareShape;
+    squareShape.type = SQUARE;
+    squareShape.shape.square.area = 25;
+
+   
+    Shape rectangleShape;
+    rectangleShape.type = RECTANGLE;
+    rectangleShape.shape.rectangle.length = 10;
+    rectangleShape.shape.rectangle.breadth = 15;
+
+
+    printf("Details of the Square Shape:\n");
+    displayShape(squareShape);
+
+    printf("\nDetails of the Rectangle Shape:\n");
+    displayShape(rectangleShape);
+
+    return 0;
+}
