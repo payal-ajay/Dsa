@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <string.h>
+
+#define NUM_STUDENTS 5
+#define NAME_LENGTH 50
+
+
+typedef struct {
+    int regNumber;        
+    char name[NAME_LENGTH]; 
+    int age;              
+    float cgpa;           
+} Student;
+
+
+void getStudentRecords(Student students[], int numStudents) {
+    for (int i = 0; i < numStudents; i++) {
+        printf("Enter details for student %d:\n", i + 1);
+        
+        printf("Register Number: ");
+        scanf("%d", &students[i].regNumber);
+
+        printf("Name: ");
+      
+        while (getchar() != '\n');
+        fgets(students[i].name, sizeof(students[i].name), stdin);
+     
+        students[i].name[strcspn(students[i].name, "\n")] = '\0';
+
+        printf("Age: ");
+        scanf("%d", &students[i].age);
+
+        printf("CGPA: ");
+        scanf("%f", &students[i].cgpa);
+
+        printf("\n");
+    }
+}
+
+Student findStudentWithGreatestCGPA(Student students[], int numStudents) {
+    Student topStudent = students[0]; 
+
+    for (int i = 1; i < numStudents; i++) {
+        if (students[i].cgpa > topStudent.cgpa) {
+            topStudent = students[i];
+        }
+    }
+
+    return topStudent;
+}
+
+int main() {
+    Student students[NUM_STUDENTS];
+
+    getStudentRecords(students, NUM_STUDENTS);
+
+    Student topStudent = findStudentWithGreatestCGPA(students, NUM_STUDENTS);
+
+  
+    printf("Student with the greatest CGPA:\n");
+    printf("Register Number: %d\n", topStudent.regNumber);
+    printf("Name: %s\n", topStudent.name);
+    printf("Age: %d\n", topStudent.age);
+    printf("CGPA: %.2f\n", topStudent.cgpa);
+
+    return 0;
+}
