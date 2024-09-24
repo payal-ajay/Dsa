@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 int main(){
-int i,n;
+int i, n; 
 printf("enter the total no of integers:");
 scanf("%d",&n);
 int *ptr=(int *)malloc(n*sixeof(int));
