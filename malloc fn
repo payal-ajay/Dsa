@@ -11,10 +11,10 @@ exit(1);
 }
 for(i=0;i<n;i++){
 printf("enter the integer:");
-scanf("d",ptr+i);
+scanf("%d",ptr+i);
 }
 for(i=0;i<n;i++){
-printf("d",*(ptr+i));
+printf("%d",*(ptr+i));
 }
 return 0;
 }
